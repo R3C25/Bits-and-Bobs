@@ -1,0 +1,34 @@
+item.thickPickaxeDiamond.name=Thick Diamond Pickaxe
+item.thickShovelDiamond.name=Thick Diamond Shovel
+item.thickAxeDiamond.name=Thick Diamond Axe
+
+item.thickPickaxeIron.name=Thick Iron Pickaxe
+item.thickShovelIron.name=Thick Iron Shovel
+item.thickAxeIron.name=Thick Iron Axe
+
+item.thickPickaxeStone.name=Thick Stone Pickaxe
+item.thickShovelStone.name=Thick Stone Shovel
+item.thickAxeStone.name=Thick Stone Axe
+
+item.thickPickaxeLapis.name=Thick Lapis Lazuli Pickaxe
+item.thickShovelLapis.name=Thick Lapis Lazuli Shovel
+item.thickAxeLapis.name=Thick Lapis Lazuli Axe
+
+item.pickaxeLapis.name=Lapis Lazuli Pickaxe
+item.shovelLapis.name=Lapis Lazuli Shovel
+item.axeLapis.name=Lapis Lazuli Axe
+item.swordLapis.name=Lapis Lazuli Sword
+
+item.plateDiamond.name=Diamond Plate
+item.plateIron.name=Iron Plate
+item.plateStone.name=Stone Plate
+item.plateLapis.name=Lapis Lazuli Plate
+item.plateLapisLarge.name=Large Lapis Lazuli Plate
+item.chunkLapis.name=Chunk of Lapis Lazuli
+item.toolHandle.name=Tool Handle
+
+item.enchantItemOpulence=Opulent Core
+item.enchantItemEarthbane=Destruction Core
+
+enchantment.opulence.name=Opulence
+enchantment.earthbane.name=Earthbane
