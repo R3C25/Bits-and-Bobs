@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockOre;
+import net.minecraft.block.BlockRedstoneOre;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.item.EntityItem;
@@ -26,6 +28,9 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.event.AnvilUpdateEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent.Action;
+import net.minecraftforge.event.entity.player.PlayerUseItemEvent.Start;
 import net.minecraftforge.event.world.BlockEvent.BreakEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 
@@ -91,6 +96,23 @@ public class EventHandler
 	}
 	
 	@SubscribeEvent(receiveCanceled=true)
+	public void doesPlace(PlayerInteractEvent e)
+	{
+		EntityPlayer player = e.entityPlayer;
+		ItemStack item = player.getCurrentEquippedItem();
+		
+		try
+		{
+		
+			if(e.action == Action.RIGHT_CLICK_BLOCK && item.stackTagCompound.getInteger("cantPlace") == 1)
+			{
+				e.setCanceled(true);
+			}
+		}catch(NullPointerException np)
+		{}
+	}
+	
+	@SubscribeEvent(receiveCanceled=true)
 	public void blockBroke(HarvestDropsEvent e)
 	{
 		EntityPlayer player = e.harvester;
@@ -121,19 +143,29 @@ public class EventHandler
 						return;
 					}
 				}
-				else if(EnchantmentHelper.getEnchantmentLevel(Ref.opulenceID, tool) > 0 && (block == Blocks.iron_ore || block == Blocks.gold_ore))
+				else if(EnchantmentHelper.getEnchantmentLevel(Ref.opulenceID, tool) > 0 && block instanceof BlockOre)
 				{
-					lvlO = EnchantmentHelper.getEnchantmentLevel(Ref.opulenceID, tool);
-					
-					e.drops.clear();
-					
-					Block cracked = getCracked(block);
-					
-					for(int i = 0; i <= r.nextInt(lvlO + 1); i++)
+					if(block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore && block != Blocks.lapis_ore && block != Blocks.diamond_ore && block != Blocks.coal_ore)
 					{
-						e.drops.add(new ItemStack(cracked));
+					
+						lvlO = EnchantmentHelper.getEnchantmentLevel(Ref.opulenceID, tool);
+						
+						e.drops.clear();
+						//Block cracked = getCracked(block);
+						
+						ItemStack drop = new ItemStack(block);
+						
+						drop.stackTagCompound = new NBTTagCompound();
+						drop.stackTagCompound.setInteger("cantPlace", 1);
+						
+						drop.setStackDisplayName("Smashed " + drop.getDisplayName());
+						
+						for(int i = 0; i <= r.nextInt(2) + lvlO; i++)
+						{
+							e.drops.add(drop);
+						}
+						return;
 					}
-					return;
 				}
 			}
 		}

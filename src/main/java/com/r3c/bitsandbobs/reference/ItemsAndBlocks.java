@@ -16,6 +16,7 @@ import com.r3c.bitsandbobs.items.ItemBBShovel;
 import com.r3c.bitsandbobs.items.ItemBBSword;
 import com.r3c.bitsandbobs.items.ItemEBPick;
 import com.r3c.bitsandbobs.items.ItemEBShovel;
+import com.r3c.bitsandbobs.items.ItemSmashedOre;
 import com.r3c.bitsandbobs.items.ItemThickAxe;
 import com.r3c.bitsandbobs.items.ItemThickPickaxe;
 import com.r3c.bitsandbobs.items.ItemThickShovel;
@@ -55,7 +56,8 @@ public class ItemsAndBlocks
 					   lapisChunk = new Item(),
 					   toolHandle = new Item(),
 					   opulenceEnchantItem = new ItemBBEnchant(Ref.opulenceID),
-					   earthbaneEnchantItem = new ItemBBEnchant(Ref.earthbaneID);
+					   earthbaneEnchantItem = new ItemBBEnchant(Ref.earthbaneID),
+					   smashedOre = new ItemSmashedOre();
 	
 	public static ItemEBPick[] pickEB = {
 										 new ItemEBPick(ironEBMaterial),
@@ -165,6 +167,8 @@ public class ItemsAndBlocks
 		GameRegistry.registerItem(opulenceEnchantItem, "enchantItemOpulence");
 		GameRegistry.registerItem(earthbaneEnchantItem, "enchantItemEarthbane");
 		
+		GameRegistry.registerItem(smashedOre, "smashedOre");
+		
 		GameRegistry.registerItem(pickEB[0], "pickEBIron");
 		GameRegistry.registerItem(pickEB[1], "pickEBLapis");
 		GameRegistry.registerItem(pickEB[2], "pickEBDiamond");
@@ -174,7 +178,7 @@ public class ItemsAndBlocks
 	}
 	
 	public static void registerSmelts()
-	{
+	{	
 		GameRegistry.addSmelting(oreCrackedIron, new ItemStack(Items.iron_ingot), 3.0F);
 		GameRegistry.addSmelting(oreCrackedGold, new ItemStack(Items.gold_ingot), 3.0F);
 	}

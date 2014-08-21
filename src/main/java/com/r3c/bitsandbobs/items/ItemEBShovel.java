@@ -129,35 +129,38 @@ public class ItemEBShovel extends ItemPickaxe implements BBTool
 	             }
 	         }
 	         
-	         drops = count;
-	         
-	         Iterator slotIt = slots.iterator();
-	         Iterator dropsIt = numInSlot.iterator();
-	         int putInSlot;
-	         int currentSlot;
-	         int putStackSize;
-	         int currStackSize;
-	         
-	         while(drops > 0)
+	         if(tool.stackTagCompound.getBoolean("drops") == true)
 	         {
-	        	 putInSlot = (Integer)dropsIt.next();
-	        	 currentSlot = (Integer)slotIt.next();
-	        	 
-	        	 try
-	        	 {
-	        		 currStackSize = player.inventoryContainer.getSlot(currentSlot).getStack().stackSize;
-	        	 }
-	        	 catch(NullPointerException e)
-	        	 {
-	        		 currStackSize = 0;
-	        	 }
-	        	 if(putInSlot > drops)
-	        		 putInSlot = drops;
-	        	 
-	        	 putStackSize = currStackSize + putInSlot;
-	        	 
-	        	 player.inventoryContainer.putStackInSlot(currentSlot, new ItemStack(dropBlock, putStackSize));
-	        	 drops -= putInSlot;
+		         drops = count;
+		         
+		         Iterator slotIt = slots.iterator();
+		         Iterator dropsIt = numInSlot.iterator();
+		         int putInSlot;
+		         int currentSlot;
+		         int putStackSize;
+		         int currStackSize;
+		         
+		         while(drops > 0)
+		         {
+		        	 putInSlot = (Integer)dropsIt.next();
+		        	 currentSlot = (Integer)slotIt.next();
+		        	 
+		        	 try
+		        	 {
+		        		 currStackSize = player.inventoryContainer.getSlot(currentSlot).getStack().stackSize;
+		        	 }
+		        	 catch(NullPointerException e)
+		        	 {
+		        		 currStackSize = 0;
+		        	 }
+		        	 if(putInSlot > drops)
+		        		 putInSlot = drops;
+		        	 
+		        	 putStackSize = currStackSize + putInSlot;
+		        	 
+		        	 player.inventoryContainer.putStackInSlot(currentSlot, new ItemStack(dropBlock, putStackSize));
+		        	 drops -= putInSlot;
+		         }
 	         }
 	         
 		}
@@ -175,5 +178,24 @@ public class ItemEBShovel extends ItemPickaxe implements BBTool
 	{
 		item.stackTagCompound = new NBTTagCompound();
 		item.stackTagCompound.setInteger("lvl", 1);
+		item.stackTagCompound.setBoolean("drops", true);
+	}
+	
+	@Override
+	public ItemStack onItemRightClick(ItemStack item, World world, EntityPlayer player)
+	{
+		if(player.isSneaking())
+		{
+			ItemStack result = item;
+			Boolean drops = result.stackTagCompound.getBoolean("drops");
+			
+			result.stackTagCompound.setBoolean("drops", drops == true ? false : true);
+			
+			return result;
+		}
+		
+		return item;
+		
+		
 	}
 }
