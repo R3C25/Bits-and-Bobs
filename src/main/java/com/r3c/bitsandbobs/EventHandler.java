@@ -122,7 +122,6 @@ public class EventHandler
 			World world = e.world;
 			ItemStack tool = player.getCurrentEquippedItem();
 			int lvlO, lvlE;
-			boolean silky;
 			Block block = e.block;
 			
 			if(tool != null)
@@ -143,9 +142,10 @@ public class EventHandler
 						return;
 					}
 				}
-				else if(EnchantmentHelper.getEnchantmentLevel(Ref.opulenceID, tool) > 0 && block instanceof BlockOre)
+				else if(EnchantmentHelper.getEnchantmentLevel(Ref.opulenceID, tool) > 0)
 				{
-					if(block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore && block != Blocks.lapis_ore && block != Blocks.diamond_ore && block != Blocks.coal_ore)
+					Boolean ore = block.getUnlocalizedName().toLowerCase().contains("ore") ? true : false;
+					if(ore && block != Blocks.redstone_ore && block != Blocks.lit_redstone_ore && block != Blocks.lapis_ore && block != Blocks.diamond_ore && block != Blocks.coal_ore)
 					{
 					
 						lvlO = EnchantmentHelper.getEnchantmentLevel(Ref.opulenceID, tool);
@@ -153,7 +153,7 @@ public class EventHandler
 						e.drops.clear();
 						//Block cracked = getCracked(block);
 						
-						ItemStack drop = new ItemStack(block);
+						ItemStack drop = new ItemStack(block, 1, e.blockMetadata);
 						
 						drop.stackTagCompound = new NBTTagCompound();
 						drop.stackTagCompound.setInteger("cantPlace", 1);
